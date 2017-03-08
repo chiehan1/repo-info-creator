@@ -1,0 +1,23 @@
+{
+  "name": "repo-info-creator",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chiehan1/repo-info-creator.git"
+  },
+  "author": "",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/chiehan1/repo-info-creator/issues"
+  },
+  "homepage": "https://github.com/chiehan1/repo-info-creator#readme",
+  "dependencies": {
+    "glob": "7.1.1",
+    "javascript-natural-sort": "0.7.1"
+  }
+}
