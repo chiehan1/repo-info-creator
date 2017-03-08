@@ -10,7 +10,7 @@ fs.writeFileSync('./repoInfos.txt', , 'utf8');
 function createRepoInfo(repo) {
   var result = {repoName: repo};
 
-  var routes = glob.sync('./' + repo + '/' + repo + '*/*.xml')
+  var routes = glob.sync('./kdbs/' + repo + '/' + repo + '*/*.xml')
     .sort(naturalSort);
 
   var totalFileN = routes.length;
