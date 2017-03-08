@@ -5,7 +5,29 @@ var naturalSort = require('javascript-natural-sort');
 
 var repos = ['jiangkangyur', 'degekangyur', 'degetengyur', 'mipam', 'gorampa', 'gampopa', '8thkarmapa', 'tsongkhapa'];
 var repoInfos = repos.map(createRepoInfo);
-fs.writeFileSync('./repoInfos.txt', JSON.stringify(repoInfos, null, '  '), 'utf8');
+var result = editRepoInfos(repoInfos);
+fs.writeFileSync('./repoInfos.txt', result, 'utf8');
+
+function editRepoInfos(repoInfos) {
+  var text = [], appendix = [];
+
+  repoInfos.forEach(function(repoInfo) {
+    var repoName = repoInfo.repoName, volInfos = repoInfo.vols;
+    text.push(repoName);
+    text.push('  總計 ' + repoInfo.totalVolN + ' 函，' + repoInfo.totalFileN + ' 個檔案。');
+
+    appendix.push(repoName + '各函檔案明細');
+    for (var volName in volInfos) {
+      var volInfo = volInfos[volName];
+      appendix.push('  ' + volName + ' 資料夾，總計 '+ volInfo.volFileN + ' 個檔案，檔案名稱：');
+      volInfo.volFiles.forEach(function(fileName) {
+        appendix.push('    ' + fileName);
+      });
+    }
+  });
+
+  return text.concat(appendix).join('\n');
+}
 
 function createRepoInfo(repo) {
   var result = {repoName: repo};
@@ -19,7 +41,7 @@ function createRepoInfo(repo) {
 
   var volN = 0;
 
-  routes.forEach(function(route, i) {
+  routes.forEach(function(route) {
     var volName = /\/([^/]+?$)/.exec(Path.dirname(route))[1];
 
     if (! vols[volName]) {
