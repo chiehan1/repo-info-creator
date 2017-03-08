@@ -31,8 +31,6 @@ function createRepoInfo(repo) {
         volFileN = 0;
       }
 
-      volN ++;
-      result += vol + '\n\n';
       lastVol = vol;
     }
 
