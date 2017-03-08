@@ -42,8 +42,10 @@ function createRepoInfo(repo) {
     volFileN ++;
 
     if (i === lastIndex) {
+      volN ++;
+      result.totalVolN = volN;
+
       result += volFileN + ' files\n\n';
-      result += volN + ' volumns\n\n';
     }
   });
 }
