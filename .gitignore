@@ -2,3 +2,4 @@ kdbs
 kdb
 node_modules
 .DS_Store
+*.txt

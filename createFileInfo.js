@@ -4,46 +4,38 @@ var Path = require('path');
 var naturalSort = require('javascript-natural-sort');
 
 var repos = ['jiangkangyur', 'degekangyur', 'degetengyur', 'mipam', 'gorampa', 'gampopa', '8thkarmapa', 'tsongkhapa'];
-
-fs.writeFileSync('./repoInfos.txt', , 'utf8');
+var repoInfos = repos.map(createRepoInfo);
+fs.writeFileSync('./repoInfos.txt', JSON.stringify(repoInfos, null, '  '), 'utf8');
 
 function createRepoInfo(repo) {
   var result = {repoName: repo};
+  var vols = {};
 
-  var routes = glob.sync('./kdbs/' + repo + '/' + repo + '*/*.xml')
+  var routes = glob.sync('../../' + repo + '/' + repo + '*/*.xml')
     .sort(naturalSort);
 
   var totalFileN = routes.length;
   result.totalFileN = totalFileN;
 
-  var lastVol = '';
-  var volFileN = 0;
   var volN = 0;
 
   routes.forEach(function(route, i) {
-    var vol = /\/([^/]+?$)/.exec(Path.dirname(route))[1];
+    var volName = /\/([^/]+?$)/.exec(Path.dirname(route))[1];
 
-    if (vol !== lastVol) {
+    if (! vols[volName]) {
       volN ++;
-
-      if (0 !== i) {
-        result += volFileN + ' files\n\n';
-        volFileN = 0;
-      }
-
-      lastVol = vol;
+      vols[volName] = {};
+      vols[volName]['volFileN'] = 0;
+      vols[volName]['volFiles'] = [];
     }
 
     var fileName = Path.basename(route);
-
-    result += fileName + '\n';
-    volFileN ++;
-
-    if (i === lastIndex) {
-      volN ++;
-      result.totalVolN = volN;
-
-      result += volFileN + ' files\n\n';
-    }
+    vols[volName]['volFiles'].push(fileName);
+    vols[volName]['volFileN'] ++;
   });
+
+  result.totalVolN = volN;
+  result.vols = vols;
+
+  return result;
 }
