@@ -18,10 +18,18 @@ function editRepoInfos(repoInfos) {
 
     appendix.push(repoName + '各函檔案明細');
     for (var volName in volInfos) {
-      var volInfo = volInfos[volName];
-      appendix.push('  ' + volName + ' 資料夾，總計 '+ volInfo.volFileN + ' 個檔案，檔案名稱：');
-      volInfo.volFiles.forEach(function(fileName) {
-        appendix.push('    ' + fileName);
+      var volInfo = volInfos[volName], volFileN = volInfo.volFileN;
+      appendix.push('  ' + volName + ' 資料夾，總計 '+ volFileN + ' 個檔案，檔案名稱：');
+
+      var oneLineFiles = [];
+      volInfo.volFiles.forEach(function(fileName, i) {
+        oneLineFiles.push(fileName);
+
+        var fileOrder = i + 1;
+        if (0 === fileOrder % 3 || fileOrder === volFileN) {
+          appendix.push('    ' + oneLineFiles.join('  '));
+          oneLineFiles = [];
+        }
       });
     }
   });
