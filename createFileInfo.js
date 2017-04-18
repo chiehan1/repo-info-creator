@@ -26,7 +26,7 @@ function editRepoInfos(repoInfos) {
         oneLineFiles.push(fileName);
 
         var fileOrder = i + 1;
-        if (0 === fileOrder % 3 || fileOrder === volFileN) {
+        if (0 === fileOrder % 4 || fileOrder === volFileN) {
           appendix.push('    ' + oneLineFiles.join('  '));
           oneLineFiles = [];
         }
